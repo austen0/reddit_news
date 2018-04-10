@@ -50,7 +50,7 @@ class NewsApi(object):
     try:
       top_headlines = self.newsapi.get_top_headlines(
         sources=source,
-        language='en'
+        language=config.LANGUAGE
       )
     except Exception as e:
       LOGGER.error(e)
