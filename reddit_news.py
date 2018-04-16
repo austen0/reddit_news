@@ -33,9 +33,11 @@ class Reddit(object):
           resubmit=False,
           send_replies=False
         )
-        LOGGER.info('Article submitted: %s' % title)
+        LOGGER.debug('Article submitted: %s' % title)
       except praw.exceptions.APIException as e:
         LOGGER.debug(e)
+      except Exception as e:
+        LOGGER.error(e)
 
 
 class NewsApi(object):
