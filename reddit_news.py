@@ -71,14 +71,17 @@ def main():
   logzero.logfile(
     'reddit_news.log', maxBytes=1e7, backupCount=3, loglevel=logging.INFO)
 
-  while True:
-    LOGGER.info('Update started.')
-    for subreddit, source in config.FEEDS.iteritems():
-      articles = newsapi.getTopNews(source)
-      reddit.submit(subreddit, articles)
+  try:
+    while True:
+      LOGGER.info('Update started.')
+      for subreddit, source in config.FEEDS.iteritems():
+        articles = newsapi.getTopNews(source)
+        reddit.submit(subreddit, articles)
 
-    LOGGER.info('Update complete.')
-    time.sleep(config.RUN_FREQUENCY_MINS * 60)
+      LOGGER.info('Update complete.')
+      time.sleep(config.RUN_FREQUENCY_MINS * 60)
+  except KeyboardInterrupt:
+    print '\nKeyboard interrupt detected, quitting reddit_news.'
 
 
 if __name__ == '__main__':
