@@ -45,6 +45,7 @@ class NewsApi(object):
 
   def getTopNews(self, source):
     LOGGER.info('Fetching latest news for: %s' % source)
+    top_headlines = dict()
     articles = dict()
 
     try:
@@ -55,10 +56,11 @@ class NewsApi(object):
     except Exception as e:
       LOGGER.error(e)
 
-    for article in top_headlines['articles']:
-      title = unidecode(article['title'])
-      url = article['url']
-      articles[title] = url
+    if 'articles' in top_headlines:
+      for article in top_headlines['articles']:
+        title = unidecode(article['title'])
+        url = article['url']
+        articles[title] = url
     LOGGER.info('Fetch complete. # of articles: %d' % len(articles))
     return articles
 
